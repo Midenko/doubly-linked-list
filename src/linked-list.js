@@ -2,7 +2,7 @@ class LinkedList {
     constructor() {
         this.firstNode = null;
         this.lastNode = null;
-        this.count = 0;
+        this.length = 0;
     }
 
     append(data) {
@@ -10,12 +10,12 @@ class LinkedList {
         if (!list.firstNode) {
             list.firstNode = newNode;
             list.lastNode = newNode;
-            list.count++;
+            list.length++;
         }
         else {
             var node = new Node(this.data = data, this.prev = list.lastNode);
             list.lastNode = node;
-            list.count++;
+            list.length++;
         }
     }
 
@@ -23,7 +23,7 @@ class LinkedList {
         if (!list.firstNode) {
             return null;
         }
-        return list.firstNode.data;	
+        return list.firstNode.data; 
     }
 
     tail() {
@@ -35,7 +35,7 @@ class LinkedList {
 
     at(index) {
         var tmp = list.lastNode;
-        for (var i = 0; i < list.count - index - 1; i++) {
+        for (var i = 0; i < this._length - index - 1; i++) {
             tmp = tmp.prev;
         }
 
@@ -44,7 +44,7 @@ class LinkedList {
 
     insertAt(index, data) {
         var tmp = list.lastNode;
-        for (var i = 0; i < list.count - index - 1; i++) {
+        for (var i = 0; i < this._length - index - 1; i++) {
             tmp = tmp.prev;
         }
 
@@ -64,20 +64,11 @@ class LinkedList {
         list = new LinkedList;
     }
 
-    deleteAt(index) {
-        var tmp = list.lastNode;
-        for (var i = 0; i < list.count - index - 1; i++) {
-            tmp = tmp.prev;
-        }
-        delete tmp;
-    }
+    deleteAt(index) {}
 
     reverse() {}
 
     indexOf(data) {}
 
-    length() {
-        return list.count;
-    }
 
 }
