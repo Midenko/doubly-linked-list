@@ -76,4 +76,8 @@ class LinkedList {
 
     indexOf(data) {}
 
+    length() {
+        return list.count;
+    }
+
 }
