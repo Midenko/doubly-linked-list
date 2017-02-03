@@ -155,3 +155,5 @@ class LinkedList {
         return index
     }
 }
+
+module.exports = LinkedList;
