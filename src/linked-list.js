@@ -1,58 +1,73 @@
 class LinkedList {
     constructor() {
-        this.firstNode = null;
-        this.lastNode = null;
+        this._head = null;
+        this._tail = null;
         this.length = 0;
     }
 
     append(data) {
         var newNode = new Node(data = data);
-        if (!list.firstNode) {
-            list.firstNode = newNode;
-            list.lastNode = newNode;
-            list.length++;
+
+        if (!this._head) {
+            this._head = newNode;
+            this._tail = newNode;
         }
         else {
-            var node = new Node(this.data = data, this.prev = list.lastNode);
-            list.lastNode = node;
-            list.length++;
+            this._tail.next = newNode;
+            newNode.prev = this._tail;
+            this._tail = newNode;
         }
+
+        this.length++;
+
+        return this;
     }
 
     head() {
-        if (!list.firstNode) {
+        if (!this._head) {
             return null;
         }
-        return list.firstNode.data; 
+        return this._head.data; 
     }
 
     tail() {
-        if (!list.firstNode) {
+        if (!this._head) {
             return null;
         }
-        return list.lastNode.data;
+        return this._tail.data;
     }
 
     at(index) {
-        var tmp = list.lastNode;
-        for (var i = 0; i < this._length - index - 1; i++) {
-            tmp = tmp.prev;
+        var tmp = this._head;
+        for (var i = 0; i < index; i++) {
+            tmp = tmp.next;
         }
-
+        if (!tmp) {
+            return 'null';
+        }
         return tmp.data;
     }
 
     insertAt(index, data) {
-        var tmp = list.lastNode;
-        for (var i = 0; i < this._length - index - 1; i++) {
-            tmp = tmp.prev;
+        var tmp = this._head;
+
+        if (index == 0 && !this._head) {
+            this.append(data);
         }
 
-        tmp.data = data;
+        else {
+            for (var i = 0; i < index; i++) {
+                tmp = tmp.next;
+            }
+
+            tmp.data = data;
+        }
+
+        return this;
     }
 
     isEmpty() {
-        if (!list.firstNode) {
+        if (!this._head) {
             return true;
         }
         else {
@@ -61,14 +76,80 @@ class LinkedList {
     }
 
     clear() {
-        list = new LinkedList;
+
+        this._head = null;
+        this._tail = null;
+        this.length = 0;
+
+        return this;
     }
 
-    deleteAt(index) {}
+    deleteAt(index) {
+        var tmp = this._head;
+        var beforeDeletedNode = null;
+        var afterDeletedNode = null;
 
-    reverse() {}
+        if (index == 0) {
+            this._head = tmp.next;
+            if (!this._head) {
+                this._tail = null;
+            } else {
+                this._head.prev = null;
+            }
+        }
 
-    indexOf(data) {}
+        else if (index == this.length - 1) {
+            this._tail = this._tail.prev;
+            this._tail.next = null;
+        }
 
+        else {
+            for (var i = 0; i < index; i++) {
+                tmp = tmp.next;
+            }
 
+            beforeDeletedNode = tmp.prev;
+            afterDeletedNode = tmp.next;
+            beforeDeletedNode.next = afterDeletedNode;
+            afterDeletedNode.prev = beforeDeletedNode;
+            tmp = null;
+        }
+
+        this.length--;
+
+        return this;
+
+    }
+
+    reverse() {
+        var fromTail = this._tail;
+        var fromHead = this._head;
+        var tmp = null;
+
+        for (var i = 0; i < this.length / 2 ; i++) {
+        tmp = fromTail.data;
+        fromTail.data = fromHead.data;
+        fromHead.data = tmp;
+
+        fromHead = fromHead.next;
+        fromTail = fromTail.prev;
+        }
+
+        return this;
+
+    }
+
+    indexOf(data) {
+        var tmp = this._head;
+        var index = 0;
+        var i = 0;
+        while(i < this.length) {
+            if(tmp === null) return -1;
+            if(tmp.data == data) break;
+            index++;
+            tmp = tmp.next;
+        }
+
+        return index
+    }
 }
