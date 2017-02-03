@@ -1,3 +1,5 @@
+const Node = require('./node');
+
 class LinkedList {
     constructor() {
         this._head = null;
